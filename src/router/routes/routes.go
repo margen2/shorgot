@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"github.com/margen2/shorgot/api/src/middlewares"
+	"github.com/margen2/shorgot/src/middlewares"
 	"net/http"
 
 	"github.com/gorilla/mux"

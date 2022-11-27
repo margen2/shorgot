@@ -1,15 +1,16 @@
 package controllers
 
 import (
-	"github.com/margen2/shorgot/api/src/answers"
-	"github.com/margen2/shorgot/api/src/auth"
-	"github.com/margen2/shorgot/api/src/db"
-	"github.com/margen2/shorgot/api/src/models"
-	"github.com/margen2/shorgot/api/src/opsec"
-	"github.com/margen2/shorgot/api/src/repositories"
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/margen2/shorgot/src/answers"
+	"github.com/margen2/shorgot/src/auth"
+	"github.com/margen2/shorgot/src/db"
+	"github.com/margen2/shorgot/src/models"
+	"github.com/margen2/shorgot/src/security"
+	"github.com/margen2/shorgot/src/repositories"
 )
 
 func Login(w http.ResponseWriter, r *http.Request) {
@@ -38,7 +39,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err = opsec.VerifyPW(savedUser.Password, user.Password); err != nil {
+	if err = security.VerifyPW(savedUser.Password, user.Password); err != nil {
 		answers.JSON(w, http.StatusUnauthorized, nil)
 		return
 	}

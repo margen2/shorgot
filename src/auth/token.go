@@ -1,7 +1,7 @@
 package auth
 
 import (
-	"github.com/margen2/shorgot/api/src/config"
+	"github.com/margen2/shorgot/src/config"
 	"errors"
 	"fmt"
 	"net/http"

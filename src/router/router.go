@@ -1,7 +1,7 @@
 package router
 
 import (
-	"github.com/margen2/shorgot/api/src/router/routes"
+	"github.com/margen2/shorgot/src/router/routes"
 
 	"github.com/gorilla/mux"
 )

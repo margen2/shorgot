@@ -1,8 +1,9 @@
 package routes
 
 import (
-	"github.com/margen2/shorgot/api/src/controllers"
 	"net/http"
+
+	"github.com/margen2/shorgot/src/controllers"
 )
 
 var linkRoutes = []Route{

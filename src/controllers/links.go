@@ -8,11 +8,11 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/margen2/shorgot/api/src/answers"
-	"github.com/margen2/shorgot/api/src/auth"
-	"github.com/margen2/shorgot/api/src/db"
-	"github.com/margen2/shorgot/api/src/models"
-	"github.com/margen2/shorgot/api/src/repositories"
+	"github.com/margen2/shorgot/src/answers"
+	"github.com/margen2/shorgot/src/auth"
+	"github.com/margen2/shorgot/src/db"
+	"github.com/margen2/shorgot/src/models"
+	"github.com/margen2/shorgot/src/repositories"
 
 	"github.com/gorilla/mux"
 )

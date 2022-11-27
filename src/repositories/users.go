@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"github.com/margen2/shorgot/api/src/models"
+	"github.com/margen2/shorgot/src/models"
 	"database/sql"
 )
 

@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"time"
 
-	"github.com/margen2/shorgot/api/src/models"
+	"github.com/margen2/shorgot/src/models"
 )
 
 type Links struct {

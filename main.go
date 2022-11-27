@@ -5,9 +5,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/margen2/shorgot/api/src/router"
+	"github.com/margen2/shorgot/src/router"
 
-	"github.com/margen2/shorgot/api/src/config"
+	"github.com/margen2/shorgot/src/config"
 )
 
 //func init() {

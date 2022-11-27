@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/margen2/shorgot/api/src/answers"
-	"github.com/margen2/shorgot/api/src/auth"
+	"github.com/margen2/shorgot/src/answers"
+	"github.com/margen2/shorgot/src/auth"
 )
 
 func Logger(nextFunc http.HandlerFunc) http.HandlerFunc {

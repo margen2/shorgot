@@ -8,12 +8,12 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/margen2/shorgot/api/src/answers"
-	"github.com/margen2/shorgot/api/src/auth"
-	"github.com/margen2/shorgot/api/src/db"
-	"github.com/margen2/shorgot/api/src/models"
-	"github.com/margen2/shorgot/api/src/opsec"
-	"github.com/margen2/shorgot/api/src/repositories"
+	"github.com/margen2/shorgot/src/answers"
+	"github.com/margen2/shorgot/src/auth"
+	"github.com/margen2/shorgot/src/db"
+	"github.com/margen2/shorgot/src/models"
+	"github.com/margen2/shorgot/src/repositories"
+	"github.com/margen2/shorgot/src/security"
 
 	"github.com/gorilla/mux"
 )
@@ -180,11 +180,11 @@ func UpdatePassword(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err = opsec.VerifyPW(dbPW, password.OldPW); err != nil {
+	if err = security.VerifyPW(dbPW, password.OldPW); err != nil {
 		answers.Error(w, http.StatusUnauthorized, err)
 		return
 	}
-	hashedPW, err := opsec.Hash(password.NewPW)
+	hashedPW, err := security.Hash(password.NewPW)
 	if err != nil {
 		answers.Error(w, http.StatusBadRequest, err)
 		return

@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"github.com/margen2/shorgot/api/src/controllers"
+	"github.com/margen2/shorgot/src/controllers"
 	"net/http"
 )
 
