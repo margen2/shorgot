@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -26,12 +25,12 @@ func Load() {
 		log.Fatal(err)
 	}
 
-	StringDBConnection = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-		os.Getenv("DB_HOST"),
-		os.Getenv("DB_PORT"),
-		os.Getenv("DB_USER"),
-		os.Getenv("DB_PW"),
-		os.Getenv("DB_NAME"))
-
+	// StringDBConnection = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+	// 	os.Getenv("DB_HOST"),
+	// 	os.Getenv("DB_PORT"),
+	// 	os.Getenv("DB_USER"),
+	// 	os.Getenv("DB_PW"),
+	// 	os.Getenv("DB_NAME"))
+	StringDBConnection = os.Getenv("DB_CONNECTION")
 	SecretKey = []byte(os.Getenv("SECRET_KEY"))
 }
