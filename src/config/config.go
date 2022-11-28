@@ -17,7 +17,7 @@ func Load() {
 	viper.ReadInConfig()
 	viper.AutomaticEnv()
 
-	StringDBConnection = viper.GetString("PORT")
+	StringDBConnection = viper.GetString("DB_CONNECTION")
 	Port = viper.GetInt("PORT")
 
 	SecretKey = []byte(os.Getenv("SECRET_KEY"))
