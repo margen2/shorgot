@@ -4,14 +4,13 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strconv"
 
 	"github.com/joho/godotenv"
 )
 
 var (
 	StringDBConnection = ""
-	Port               = 0
+	Port               = ""
 	SecretKey          []byte
 )
 
@@ -21,12 +20,11 @@ func Load() {
 	if err = godotenv.Load(); err != nil {
 		log.Fatal(err)
 	}
-	Port, err = strconv.Atoi(os.Getenv("API_PORT"))
-	if err != nil {
-		Port = 9000
-	}
+	Port = os.Getenv("API_PORT")
 
-	StringDBConnection = fmt.Sprintf("%s:%s@/%s?charset=utf8&parseTime=True&loc=Local",
+	StringDBConnection = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+		os.Getenv("DB_HOST"),
+		os.Getenv("DB_PORT"),
 		os.Getenv("DB_USER"),
 		os.Getenv("DB_PW"),
 		os.Getenv("DB_NAME"))

@@ -1,8 +1,9 @@
 package repositories
 
 import (
-	"github.com/margen2/shorgot/src/models"
 	"database/sql"
+
+	"github.com/margen2/shorgot/src/models"
 )
 
 type Users struct {
@@ -15,27 +16,25 @@ func NewUserRepositorie(db *sql.DB) *Users {
 
 func (repositorie Users) Create(user models.User) (uint64, error) {
 	statment, err := repositorie.db.Prepare(
-		"INSERT INTO users(email, password) VALUES(?, ?)",
+		"INSERT INTO users(email, password) VALUES($1, $2) RETURNING user_id",
 	)
 	if err != nil {
 		return 0, err
 	}
 	defer statment.Close()
-	result, err := statment.Exec(user.Email, user.Password)
-	if err != nil {
-		return 0, err
-	}
-	LastInsert, err := result.LastInsertId()
 
+	id := 0
+	err = statment.QueryRow(user.Email, user.Password).Scan(&id)
 	if err != nil {
 		return 0, err
 	}
-	return uint64(LastInsert), nil
+
+	return uint64(id), nil
 }
 
 func (repositorie Users) UpdateEmail(ID uint64, user models.User) error {
 	statment, err := repositorie.db.Prepare(
-		"UPDATE users SET email = ? WHERE user_id = ?",
+		"UPDATE users SET email = $1 WHERE user_id = $2",
 	)
 	if err != nil {
 		return err
@@ -49,7 +48,7 @@ func (repositorie Users) UpdateEmail(ID uint64, user models.User) error {
 
 func (repositorie Users) DeleteUser(ID uint64) error {
 	statment, err := repositorie.db.Prepare(
-		"DELETE FROM users WHERE user_id = ?",
+		"DELETE FROM users WHERE user_id = $1",
 	)
 	if err != nil {
 		return err
@@ -62,7 +61,7 @@ func (repositorie Users) DeleteUser(ID uint64) error {
 }
 
 func (repositorie Users) SearchEmail(email string) (models.User, error) {
-	line, err := repositorie.db.Query("SELECT user_id, password FROM users WHERE email = ?", email)
+	line, err := repositorie.db.Query("SELECT user_id, password FROM users WHERE email = $1", email)
 	if err != nil {
 		return models.User{}, err
 	}
@@ -79,7 +78,7 @@ func (repositorie Users) SearchEmail(email string) (models.User, error) {
 }
 
 func (repositorie Users) SearchPW(userID uint64) (string, error) {
-	line, err := repositorie.db.Query("SELECT password FROM users WHERE user_id = ?", userID)
+	line, err := repositorie.db.Query("SELECT password FROM users WHERE user_id = $1", userID)
 	if err != nil {
 		return "", err
 	}
@@ -97,7 +96,7 @@ func (repositorie Users) SearchPW(userID uint64) (string, error) {
 }
 
 func (repositorie Users) UpdatePW(userID uint64, pw string) error {
-	statement, err := repositorie.db.Prepare("UPDATE users SET password = ? WHERE user_id = ?")
+	statement, err := repositorie.db.Prepare("UPDATE users SET password = $1 WHERE user_id = $2")
 	if err != nil {
 		return err
 	}

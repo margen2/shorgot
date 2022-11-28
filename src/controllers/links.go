@@ -3,7 +3,6 @@ package controllers
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -37,7 +36,6 @@ func CreateLink(w http.ResponseWriter, r *http.Request) {
 	}
 
 	link.AuthorID = userID
-	fmt.Println(link)
 
 	db, err := db.ConnectDB()
 	if err != nil {
@@ -73,6 +71,11 @@ func SearchLink(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	err = repositorie.AddClick(link.ID)
+	if err != nil {
+		answers.Error(w, http.StatusInternalServerError, err)
+		return
+	}
 	answers.JSON(w, http.StatusOK, link)
 }
 
@@ -123,7 +126,6 @@ func UpdateLink(w http.ResponseWriter, r *http.Request) {
 
 	repositorie := repositories.NewLinksRepositorie(db)
 	linkOnDB, err := repositorie.SearchLinkByUserID(linkID)
-
 	if err != nil {
 		answers.Error(w, http.StatusInternalServerError, err)
 		return

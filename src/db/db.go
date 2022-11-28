@@ -1,17 +1,15 @@
 package db
 
 import (
-	"github.com/margen2/shorgot/src/config"
 	"database/sql"
 
-	_ "github.com/go-sql-driver/mysql"
+	"github.com/margen2/shorgot/src/config"
+
+	_ "github.com/lib/pq"
 )
 
-// connStr := "postgres://postgres:password@localhost/DB_1?sslmode=disable"
-// db, err = sql.Open("postgres", connStr)
-
 func ConnectDB() (*sql.DB, error) {
-	db, err := sql.Open("mysql", config.StringDBConnection)
+	db, err := sql.Open("postgres", config.StringDBConnection)
 	if err != nil {
 		return nil, err
 	}

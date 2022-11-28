@@ -3,7 +3,6 @@ package controllers
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -30,7 +29,6 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 		answers.Error(w, http.StatusBadRequest, err)
 		return
 	}
-	fmt.Println(user)
 
 	if err = user.Prepare("signup"); err != nil {
 		answers.Error(w, http.StatusBadRequest, err)
@@ -50,6 +48,8 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 		answers.Error(w, http.StatusUnprocessableEntity, err)
 		return
 	}
+
+	user.Password = ""
 	answers.JSON(w, http.StatusCreated, user)
 }
 
@@ -148,8 +148,7 @@ func UpdatePassword(w http.ResponseWriter, r *http.Request) {
 		answers.Error(w, http.StatusBadRequest, err)
 		return
 	}
-
-	if userID == userIDToken {
+	if userID != userIDToken {
 		answers.Error(w, http.StatusForbidden, errors.New("you can't change someone's else password"))
 		return
 	}

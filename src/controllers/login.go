@@ -9,8 +9,8 @@ import (
 	"github.com/margen2/shorgot/src/auth"
 	"github.com/margen2/shorgot/src/db"
 	"github.com/margen2/shorgot/src/models"
-	"github.com/margen2/shorgot/src/security"
 	"github.com/margen2/shorgot/src/repositories"
+	"github.com/margen2/shorgot/src/security"
 )
 
 func Login(w http.ResponseWriter, r *http.Request) {
@@ -43,12 +43,13 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		answers.JSON(w, http.StatusUnauthorized, nil)
 		return
 	}
-
-	token, err := auth.CreateToken(savedUser.ID)
+	var login models.Login
+	login.ID = savedUser.ID
+	login.JWT, err = auth.CreateToken(savedUser.ID)
 	if err != nil {
 		answers.Error(w, http.StatusInternalServerError, err)
 		return
 	}
 
-	answers.JSON(w, http.StatusAccepted, token)
+	answers.JSON(w, http.StatusAccepted, login)
 }
