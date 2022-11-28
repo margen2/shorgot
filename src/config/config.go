@@ -1,11 +1,9 @@
 package config
 
 import (
-	"log"
 	"os"
-	"strconv"
 
-	"github.com/joho/godotenv"
+	"github.com/spf13/viper"
 )
 
 var (
@@ -15,22 +13,12 @@ var (
 )
 
 func Load() {
-	var err error
+	viper.SetConfigFile("ENV")
+	viper.ReadInConfig()
+	viper.AutomaticEnv()
 
-	if err = godotenv.Load(); err != nil {
-		log.Fatal(err)
-	}
-	Port, err = strconv.Atoi(os.Getenv("PORT"))
-	if err != nil {
-		log.Fatal(err)
-	}
+	StringDBConnection = viper.GetString("PORT")
+	Port = viper.GetInt("PORT")
 
-	// StringDBConnection = fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-	// 	os.Getenv("DB_HOST"),
-	// 	os.Getenv("DB_PORT"),
-	// 	os.Getenv("DB_USER"),
-	// 	os.Getenv("DB_PW"),
-	// 	os.Getenv("DB_NAME"))
-	StringDBConnection = os.Getenv("DB_CONNECTION")
 	SecretKey = []byte(os.Getenv("SECRET_KEY"))
 }
