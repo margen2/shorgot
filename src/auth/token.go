@@ -1,7 +1,6 @@
 package auth
 
 import (
-	"github.com/margen2/shorgot/src/config"
 	"errors"
 	"fmt"
 	"net/http"
@@ -9,7 +8,9 @@ import (
 	"strings"
 	"time"
 
-	jwt "github.com/dgrijalva/jwt-go"
+	"github.com/margen2/shorgot/src/config"
+
+	"github.com/golang-jwt/jwt/v4"
 )
 
 func CreateToken(userID uint64) (string, error) {
