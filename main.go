@@ -21,8 +21,8 @@ import (
 
 func main() {
 	config.Load()
-	fmt.Printf("Running API on %s", config.Port)
+	fmt.Printf("Running API on port :%d", config.Port)
 	r := router.GenerateRouter()
-	log.Fatal(http.ListenAndServe(config.Port, r))
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", config.Port), r))
 
 }
