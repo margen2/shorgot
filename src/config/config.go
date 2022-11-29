@@ -12,6 +12,7 @@ var (
 	SecretKey          []byte
 )
 
+// Load loads the environment variables
 func Load() {
 	viper.SetConfigFile("ENV")
 	viper.ReadInConfig()

@@ -16,6 +16,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// CreateLink creates a link for the given user
 func CreateLink(w http.ResponseWriter, r *http.Request) {
 	userID, err := auth.ExtractUserID(r)
 	if err != nil {
@@ -54,6 +55,7 @@ func CreateLink(w http.ResponseWriter, r *http.Request) {
 	answers.JSON(w, http.StatusCreated, link)
 }
 
+// SearchLink returns the complete link information from the given shortened url
 func SearchLink(w http.ResponseWriter, r *http.Request) {
 	shortened := mux.Vars(r)["link"]
 
@@ -79,6 +81,7 @@ func SearchLink(w http.ResponseWriter, r *http.Request) {
 	answers.JSON(w, http.StatusOK, link)
 }
 
+// SearchLinks returns all the active links for the given user ID
 func SearchLinks(w http.ResponseWriter, r *http.Request) {
 	userIDToken, err := auth.ExtractUserID(r)
 	if err != nil {
@@ -103,6 +106,7 @@ func SearchLinks(w http.ResponseWriter, r *http.Request) {
 	answers.JSON(w, http.StatusOK, links)
 }
 
+// UpdateLink updates the given link
 func UpdateLink(w http.ResponseWriter, r *http.Request) {
 	userID, err := auth.ExtractUserID(r)
 	if err != nil {
@@ -156,6 +160,7 @@ func UpdateLink(w http.ResponseWriter, r *http.Request) {
 	answers.JSON(w, http.StatusNoContent, nil)
 }
 
+// DeleteLink deletes the given link from the database
 func DeleteLink(w http.ResponseWriter, r *http.Request) {
 	userID, err := auth.ExtractUserID(r)
 	if err != nil {

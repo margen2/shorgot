@@ -14,6 +14,7 @@ func NewUserRepositorie(db *sql.DB) *Users {
 	return &Users{db}
 }
 
+// Create creates a new user entry on the database
 func (repositorie Users) Create(user models.User) (uint64, error) {
 	statment, err := repositorie.db.Prepare(
 		"INSERT INTO users(email, password) VALUES($1, $2) RETURNING user_id",
@@ -32,6 +33,7 @@ func (repositorie Users) Create(user models.User) (uint64, error) {
 	return uint64(id), nil
 }
 
+// UpdateEmail updates the email for the given userID
 func (repositorie Users) UpdateEmail(ID uint64, user models.User) error {
 	statment, err := repositorie.db.Prepare(
 		"UPDATE users SET email = $1 WHERE user_id = $2",
@@ -46,6 +48,7 @@ func (repositorie Users) UpdateEmail(ID uint64, user models.User) error {
 	return nil
 }
 
+// DeleteUser delete the given userID from the database
 func (repositorie Users) DeleteUser(ID uint64) error {
 	statment, err := repositorie.db.Prepare(
 		"DELETE FROM users WHERE user_id = $1",
@@ -60,6 +63,7 @@ func (repositorie Users) DeleteUser(ID uint64) error {
 	return nil
 }
 
+// SearchEmail searches for the associated user based on the given email
 func (repositorie Users) SearchEmail(email string) (models.User, error) {
 	line, err := repositorie.db.Query("SELECT user_id, password FROM users WHERE email = $1", email)
 	if err != nil {
@@ -77,6 +81,7 @@ func (repositorie Users) SearchEmail(email string) (models.User, error) {
 	return user, nil
 }
 
+// SearchPW returns the password for the given userID
 func (repositorie Users) SearchPW(userID uint64) (string, error) {
 	line, err := repositorie.db.Query("SELECT password FROM users WHERE user_id = $1", userID)
 	if err != nil {
@@ -95,6 +100,7 @@ func (repositorie Users) SearchPW(userID uint64) (string, error) {
 	return user.Password, nil
 }
 
+//UpdatePW updates the password for the given userID
 func (repositorie Users) UpdatePW(userID uint64, pw string) error {
 	statement, err := repositorie.db.Prepare("UPDATE users SET password = $1 WHERE user_id = $2")
 	if err != nil {

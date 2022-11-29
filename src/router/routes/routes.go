@@ -1,8 +1,9 @@
 package routes
 
 import (
-	"github.com/margen2/shorgot/src/middlewares"
 	"net/http"
+
+	"github.com/margen2/shorgot/src/middlewares"
 
 	"github.com/gorilla/mux"
 )
@@ -14,6 +15,7 @@ type Route struct {
 	RequiresAuthentication bool
 }
 
+// Config adds each route to the router and adds the Logger  and authentication middleware to them
 func Config(r *mux.Router) *mux.Router {
 	routes := userRoutes
 	routes = append(routes, loginRoute)

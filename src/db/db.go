@@ -8,6 +8,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
+// ConnectDB connects to the dabatase using the StringDBConnection from the environment variables
 func ConnectDB() (*sql.DB, error) {
 	db, err := sql.Open("postgres", config.StringDBConnection)
 	if err != nil {

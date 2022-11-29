@@ -13,6 +13,7 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 )
 
+// CreateToken creates a JWT token for the given userID
 func CreateToken(userID uint64) (string, error) {
 	permissions := jwt.MapClaims{}
 	permissions["authorized"] = true
@@ -22,6 +23,7 @@ func CreateToken(userID uint64) (string, error) {
 	return token.SignedString([]byte(config.SecretKey))
 }
 
+// ValidateToken extracts the JWT token from the request and returns an error if the token is not valid
 func ValidateToken(r *http.Request) error {
 	tokenString := extractToken(r)
 	token, err := jwt.Parse(tokenString, returnVerificationKey)
@@ -34,6 +36,7 @@ func ValidateToken(r *http.Request) error {
 	return errors.New("invalid token")
 }
 
+// ExtractUserID extracts the user ID from the JWT token inside the request
 func ExtractUserID(r *http.Request) (uint64, error) {
 	tokenString := extractToken(r)
 	token, err := jwt.Parse(tokenString, returnVerificationKey)

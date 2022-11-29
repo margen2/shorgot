@@ -17,6 +17,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
+// CreateUser creates a new user on the database
 func CreateUser(w http.ResponseWriter, r *http.Request) {
 	requestBody, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -53,6 +54,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	answers.JSON(w, http.StatusCreated, user)
 }
 
+// UpdateUser updates the email for the given user
 func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	parameters := mux.Vars(r)
 	userID, err := strconv.ParseUint(parameters["userid"], 10, 64)
@@ -102,6 +104,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	answers.JSON(w, http.StatusNoContent, nil)
 }
 
+// DeleteUser deletes the given user from the database
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	parameters := mux.Vars(r)
 	userID, err := strconv.ParseUint(parameters["userid"], 10, 64)
@@ -136,6 +139,7 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	answers.JSON(w, http.StatusNoContent, nil)
 }
 
+// UpdatePassword updates the password for the given user
 func UpdatePassword(w http.ResponseWriter, r *http.Request) {
 	userIDToken, err := auth.ExtractUserID(r)
 	if err != nil {

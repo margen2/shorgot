@@ -13,6 +13,7 @@ import (
 	"github.com/margen2/shorgot/src/security"
 )
 
+// Login verifies if the given email and password match and returns a JWT token on success
 func Login(w http.ResponseWriter, r *http.Request) {
 	requestBody, err := ioutil.ReadAll(r.Body)
 	if err != nil {
