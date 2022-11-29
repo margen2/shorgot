@@ -129,7 +129,7 @@ func UpdateLink(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	repositorie := repositories.NewLinksRepositorie(db)
-	linkOnDB, err := repositorie.SearchLinkByUserID(linkID)
+	linkOnDB, err := repositorie.SearchLinkByID(linkID)
 	if err != nil {
 		answers.Error(w, http.StatusInternalServerError, err)
 		return
